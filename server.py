@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Serve the Partner Certification Lab locally with Python's standard library."""
+"""Serve the Partner Readiness Lab locally with Python's standard library."""
 
 import argparse
 import os
@@ -40,7 +40,7 @@ def main():
     args = parse_args()
     handler = partial(LabRequestHandler, directory=str(STATIC_DIR))
     server = ThreadingHTTPServer((args.host, args.port), handler)
-    print(f"Partner Certification Lab: http://{args.host}:{args.port}", flush=True)
+    print(f"Partner Readiness Lab: http://{args.host}:{args.port}", flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

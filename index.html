@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A two-track ElevenAgents SI partner readiness lab with live voice, transparent local coaching, and human FDE review.">
-  <title>Partner Readiness Lab | Northstar Conversation</title>
+  <meta name="description" content="A partner readiness lab with live voice role play, custom target accounts and buyers, shareable Markdown scenarios, transparent local coaching, and human review.">
+  <title>Partner Readiness Lab | Scenario Practice</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
@@ -18,8 +18,8 @@
       <span>Partner Readiness Lab</span>
     </a>
     <div class="header-actions">
-      <span class="prototype-label">Independent SI rehearsal</span>
-      <button class="text-button" id="practice-review" type="button">Practice FDE</button>
+      <span class="prototype-label">Independent role-play lab</span>
+      <button class="text-button" id="practice-review" type="button">Practice review</button>
       <button class="text-button" id="restart-lab" type="button">Restart</button>
       <button class="text-button danger-text" id="reset-lab" type="button">Reset</button>
     </div>
@@ -29,20 +29,20 @@
     <section class="lab-heading" aria-labelledby="lab-title">
       <div>
         <h1 id="lab-title">The Northstar conversation</h1>
-        <p class="lab-deck">Prepare as an SI partner. Discover first, respond with evidence, and earn the right next step.</p>
+        <p class="lab-deck" id="lab-deck">Prepare with a target account and buyer. Discover first, respond with evidence, and earn the right next step.</p>
       </div>
       <dl class="lab-facts">
         <div><dt>Target</dt><dd>12 minutes</dd></div>
         <div><dt>Listening goal</dt><dd>80 / 20</dd></div>
-        <div><dt>Decision</dt><dd>Human FDE</dd></div>
+        <div><dt>Decision</dt><dd id="decision-fact">Human review</dd></div>
       </dl>
     </section>
 
-    <ol class="certification-loop" aria-label="Certification flow">
-      <li data-loop="prepare" class="is-active"><span>1</span><div><strong>Prepare</strong><small>Dossier and track</small></div></li>
-      <li data-loop="conversation"><span>2</span><div><strong>Conversation</strong><small>Live customer exchange</small></div></li>
+    <ol class="certification-loop" aria-label="Practice flow">
+      <li data-loop="prepare" class="is-active"><span>1</span><div><strong>Prepare</strong><small>Account, buyer, and scenario</small></div></li>
+      <li data-loop="conversation"><span>2</span><div><strong>Conversation</strong><small>Live role-play exchange</small></div></li>
       <li data-loop="evaluation"><span>3</span><div><strong>Evaluation</strong><small>Session and native evidence</small></div></li>
-      <li data-loop="review"><span>4</span><div><strong>FDE review</strong><small>Track-specific judgment</small></div></li>
+      <li data-loop="review"><span>4</span><div><strong>Human review</strong><small>Scenario-specific judgment</small></div></li>
     </ol>
 
     <div class="workspace" id="workspace">
@@ -60,35 +60,110 @@
       <section class="conversation-stage" aria-labelledby="conversation-title">
         <div class="stage-header">
           <div class="persona">
-            <span class="persona-monogram" aria-hidden="true">MC</span>
-            <div><h2 id="conversation-title">Maya Chen</h2><p>VP of Customer Experience, fictional Northstar Telecom</p></div>
+            <span class="persona-monogram" id="persona-monogram" aria-hidden="true">MC</span>
+            <div><h2 id="conversation-title">Maya Chen</h2><p id="conversation-subtitle">VP of Customer Experience, fictional Northstar Telecom</p></div>
           </div>
           <span class="status-badge" id="session-status" data-state="setup"><span aria-hidden="true"></span>Setup</span>
         </div>
 
         <div class="stage-body">
           <section id="setup-panel" class="setup-panel">
-            <h3>Choose your readiness track</h3>
-            <p>You are from an external ElevenLabs SI partner organization, not ElevenLabs staff. Both tracks use the same fictional customer.</p>
-            <div class="track-picker" role="group" aria-label="Learning track">
+            <h3>Build your practice session</h3>
+            <p>Start with Northstar or bring a fictional or non-confidential target account. You are practicing as an external partner, not an employee of the target company.</p>
+
+            <div class="scenario-grid">
+              <div class="field-group">
+                <label for="account-source">Target account</label>
+                <select id="account-source">
+                  <option value="northstar">Northstar Telecom</option>
+                  <option value="custom">Custom company or industry</option>
+                </select>
+              </div>
+              <div class="field-group" id="buyer-select-field">
+                <label for="buyer-select">Northstar buyer</label>
+                <select id="buyer-select">
+                  <option value="maya">Maya Chen, VP Customer Experience</option>
+                  <option value="daniel">Daniel Okafor, CTO</option>
+                  <option value="priya">Priya Raman, CISO</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="scenario-select">Practice structure</label>
+                <select id="scenario-select">
+                  <option value="full">Full discovery</option>
+                  <option value="qualification">Qualification and value</option>
+                  <option value="technical">Technical validation and handoff</option>
+                  <option value="objections">Objection handling and proof</option>
+                  <option value="escalation">Customer escalation and recovery</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="focus-select">Practice focus</label>
+                <select id="focus-select"><option value="">Balanced, no focus</option></select>
+              </div>
+            </div>
+            <p class="scenario-summary" id="scenario-summary"></p>
+
+            <div class="track-picker" id="track-picker" role="group" aria-label="Learning track">
               <button type="button" data-track="seller" aria-pressed="true"><strong>Partner seller</strong><span>Value, discovery, commercial progression</span></button>
               <button type="button" data-track="solutions-consultant" aria-pressed="false"><strong>Partner solutions consultant</strong><span>Technical discovery and validation</span></button>
             </div>
+
+            <div id="custom-fields" class="custom-fields" hidden>
+              <div class="document-field">
+                <label for="account-text">Target-company dossier <span>Required</span></label>
+                <textarea id="account-text" rows="5" maxlength="16000" placeholder="Company: Example Industries&#10;Industry: Manufacturing&#10;&#10;Add business context, priorities, stakeholders, constraints, and unknowns."></textarea>
+                <div class="file-row">
+                  <input id="account-file" type="file" accept=".md,.txt,text/markdown,text/plain" aria-label="Upload target-company Markdown or text file">
+                  <button class="text-button" id="account-template" type="button">Download template</button>
+                </div>
+              </div>
+              <div class="document-field">
+                <label for="buyer-text">Buyer persona <span>Required</span></label>
+                <textarea id="buyer-text" rows="5" maxlength="16000" placeholder="Name: Jordan Lee&#10;Role: Chief Operating Officer&#10;&#10;Add responsibilities, priorities, concerns, objections, and decision influence."></textarea>
+                <div class="file-row">
+                  <input id="buyer-file" type="file" accept=".md,.txt,text/markdown,text/plain" aria-label="Upload buyer-persona Markdown or text file">
+                  <button class="text-button" id="buyer-template" type="button">Download template</button>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="offer-input">Product or service you are selling</label>
+                <input id="offer-input" type="text" maxlength="1000" placeholder="Example: Field-service workflow automation">
+              </div>
+              <div class="field-group">
+                <label for="objective-input">Your practice objective</label>
+                <textarea id="objective-input" rows="2" maxlength="2000" placeholder="Example: Qualify the operational problem and earn a technical validation session."></textarea>
+              </div>
+              <p class="privacy-note">Files are read locally and are not sent to an application server. Bounded scenario context is sent to ElevenLabs when you start. Never use credentials, secrets, personal data, or confidential account material.</p>
+            </div>
+
+            <div class="pack-actions">
+              <label class="secondary-button file-action" for="pack-file">Import Markdown pack</label>
+              <input id="pack-file" type="file" accept=".md,text/markdown" hidden>
+              <button class="secondary-button" id="export-pack" type="button">Export scenario pack</button>
+            </div>
+            <p class="field-hint" id="pack-status" role="status">Shareable packs are plain Markdown. Imported content is never rendered as HTML or executed.</p>
+
+            <div class="mode-picker" role="group" aria-label="Practice mode">
+              <button type="button" data-mode="guided" aria-pressed="true"><strong>Guided review</strong><span>Evidence and human review</span></button>
+              <button type="button" data-mode="free" aria-pressed="false"><strong>Free practice</strong><span>No scoring or review gate</span></button>
+            </div>
             <div class="track-outcome" id="track-outcome"></div>
+
             <form id="agent-form" novalidate>
-              <label for="agent-id">Public ElevenLabs agent ID</label>
+              <label for="agent-id" id="agent-label">Public ElevenLabs agent ID for Maya Chen</label>
               <div class="agent-row">
                 <input id="agent-id" type="text" autocomplete="off" spellcheck="false" placeholder="agent_..." minlength="6" maxlength="128" aria-describedby="agent-hint agent-error" required>
                 <button class="secondary-button" type="submit">Configure</button>
               </div>
-              <p class="field-hint" id="agent-hint">The ID is not secret. Never enter an API key. The expanded app uses the official @elevenlabs/client SDK.</p>
+              <p class="field-hint" id="agent-hint">Use Maya's dedicated public agent. IDs are not secret. Never enter an API key.</p>
               <p class="form-error" id="agent-error" role="alert" hidden></p>
             </form>
             <button class="primary-button" id="start-session" type="button" disabled>Start live conversation</button>
             <p class="session-message" id="setup-message" role="status"></p>
             <div class="microphone-note">
               <h4>Microphone and session</h4>
-              <p>Start only when you can speak for 10 to 15 minutes. Your browser asks for microphone access for the live ElevenLabs conversation. Audio and native transcripts go to ElevenLabs under your account settings.</p>
+              <p>Start only when you can speak for 10 to 15 minutes. Your browser asks for microphone access. Audio and native transcripts go to ElevenLabs under your account settings.</p>
             </div>
           </section>
 
@@ -103,16 +178,14 @@
               <span id="conversation-id">Conversation ID pending</span>
             </div>
             <div class="transcript" id="transcript" role="log" aria-live="off" aria-relevant="additions text">
-              <div class="transcript-empty" id="transcript-empty">Maya's first message and your live transcript will appear here.</div>
+              <div class="transcript-empty" id="transcript-empty">The buyer's first message and your live transcript will appear here.</div>
             </div>
             <div class="visually-hidden" id="transcript-announcement" aria-live="polite" aria-atomic="true"></div>
             <section class="response-coach" id="response-coach" aria-labelledby="response-coach-title">
               <div class="coach-heading"><h3 id="response-coach-title">Say this to Maya</h3><span>Verbatim script</span></div>
-              <p id="response-context" aria-live="polite">After Maya speaks, your role-specific script will appear here.</p>
+              <p id="response-context" aria-live="polite">After the buyer speaks, your role-specific script will appear here.</p>
               <div class="verbatim-script" id="verbatim-script" hidden><p></p></div>
-              <div class="script-actions">
-                <button class="secondary-button" id="use-script" type="button" hidden>Edit this script</button>
-              </div>
+              <div class="script-actions"><button class="secondary-button" id="use-script" type="button" hidden>Edit this script</button></div>
               <label class="composer-label" for="composer">Make it your own <span>Optional</span></label>
               <textarea id="composer" rows="3" maxlength="1600" placeholder="Read the script above as written, or select Edit this script to change it."></textarea>
               <div class="composer-actions">
@@ -124,12 +197,13 @@
           </section>
 
           <section id="evaluation-panel" class="evaluation-panel" hidden>
-            <h3>Review the session evidence</h3>
-            <p>The SDK session ended after at least 10 minutes. Inspect local metrics and ElevenLabs native history. Opening history is required but does not verify evaluation contents or completion.</p>
+            <h3 id="evaluation-title">Review the session evidence</h3>
+            <p id="evaluation-copy">The SDK session ended after at least 10 minutes. Inspect local metrics and ElevenLabs native history. Opening history is required but does not verify evaluation contents or completion.</p>
             <dl class="evaluation-summary" id="evaluation-summary"></dl>
             <a class="primary-button evaluation-link" id="open-evaluation" href="https://elevenlabs.io/app/agents" target="_blank" rel="noopener">Open ElevenLabs history</a>
             <p id="evaluation-opened" role="status"></p>
-            <button class="secondary-button" id="continue-review" type="button" disabled>Continue to FDE review</button>
+            <button class="secondary-button" id="continue-review" type="button" disabled>Continue to human review</button>
+            <button class="primary-button" id="free-return" type="button" hidden>Return to practice setup</button>
           </section>
 
           <section id="review-stage" class="evaluation-panel" hidden>
@@ -140,7 +214,7 @@
           </section>
         </div>
         <footer class="stage-footer">
-          <span id="stage-note">Select a track and configure a public agent.</span>
+          <span id="stage-note">Select an account, buyer, and scenario, then configure a public agent.</span>
           <a href="https://elevenlabs.io/app/agents" target="_blank" rel="noopener">ElevenLabs history</a>
         </footer>
       </section>
@@ -161,23 +235,23 @@
             <p id="compass-copy"></p>
           </section>
           <section class="handoff-section">
-            <h2>FDE handoff cues</h2>
+            <h2>Specialist handoff cues</h2>
             <p>Bring in a specialist rather than overcommitting.</p>
             <ul id="handoff-cues"></ul>
           </section>
-          <section class="evidence-section">
-            <h2 id="evidence-title">Track evidence</h2>
-            <p>Rules mark topics heard in the live transcript. Excerpts stay in memory and are not persisted.</p>
+          <section class="evidence-section" id="evidence-section">
+            <h2 id="evidence-title">Scenario evidence</h2>
+            <p id="evidence-copy">Rules mark topics heard in the live transcript. Excerpts stay in memory and are not persisted.</p>
             <div id="track-evidence"></div>
           </section>
-          <section class="signals-section">
+          <section class="signals-section" id="signals-section">
             <h2>Possible buying signals</h2>
-            <p>Local Maya-message patterns only. They do not declare purchase intent.</p>
+            <p>Local buyer-message patterns only. They do not declare purchase intent.</p>
             <ul id="buying-signals"><li class="empty-evidence">No signals detected yet.</li></ul>
           </section>
         </div>
         <section id="fde-panel" hidden aria-labelledby="fde-title">
-          <h2 id="fde-title">Human FDE review</h2>
+          <h2 id="fde-title">Human review</h2>
           <p id="fde-outcome"></p>
           <form id="review-form" novalidate>
             <div id="review-criteria"></div>
@@ -199,11 +273,11 @@
         </section>
       </aside>
     </div>
-    <p class="page-disclaimer">Independent project by Tony Gilharry. Fictional customer scenario. Not an official ElevenLabs product, production deployment, or accredited credential.</p>
+    <p class="page-disclaimer">Independent project by Tony Gilharry. Use fictional or non-confidential practice context. Not an official ElevenLabs product, production deployment, or accredited credential.</p>
   </main>
 
   <section id="print-sheet" class="print-sheet" hidden aria-label="Prototype review record">
-    <header><p>ElevenAgents SI Partner Readiness Lab</p><h1>The Northstar Conversation</h1></header>
+    <header><p>Partner Readiness Lab</p><h1 id="print-title">Scenario practice record</h1></header>
     <div id="print-content"></div>
     <footer id="print-footer"></footer>
   </section>

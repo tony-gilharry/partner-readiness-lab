@@ -1,6 +1,6 @@
 {
-  "name": "partner-certification-lab",
-  "version": "2.0.0",
+  "name": "partner-readiness-lab",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "engines": {
