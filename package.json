@@ -1,6 +1,6 @@
 {
   "name": "partner-readiness-lab",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "type": "module",
   "engines": {
@@ -10,7 +10,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "app": "bash macos/build_app.sh"
+    "app": "bash macos/build_app.sh",
+    "opsec": "node scripts/opsec-check.mjs",
+    "release:check": "npm run opsec && npm run build"
   },
   "dependencies": {
     "@elevenlabs/client": "1.31.0"

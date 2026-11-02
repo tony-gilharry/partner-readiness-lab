@@ -80,6 +80,12 @@ See [`docs/scenario-packs.md`](docs/scenario-packs.md) for the format, safety ru
 - There is no application backend. Files are read in the browser, but bounded scenario context is sent to ElevenLabs when a live session starts.
 - Use fictional or non-confidential information only. Never upload credentials, secrets, personal data, or proprietary account material.
 
+### Release OPSEC gate
+
+Before every push, tag, or release, run `npm run release:check` and complete the manual checklist in [`docs/OPSEC.md`](docs/OPSEC.md). The automated check scans release candidates and Git history for common secrets, agent IDs, and sensitive artifacts. Manual review covers the staged diff, screenshots, recordings, release assets, data boundaries, and verification claims. The same check runs in GitHub Actions on pushes and pull requests.
+
+Report the automated result, manual review result, and remaining live-account verification gaps before publishing. v1.1 passed a retrospective OPSEC audit, but this formal gate was added afterward.
+
 ## Guided review and Free practice
 
 **Guided review** keeps the existing readiness controls: a real terminal SDK session of at least 10 minutes, a real conversation ID, opened ElevenLabs history, and a human decision. Local keyword rules mark evidence topics, not conversation quality. Native ElevenLabs evaluation remains separate and does not automatically switch by scenario.
